@@ -17,7 +17,7 @@ def main():
     execute_from_command_line(sys.argv)
 
     # Run the api server
-    subprocess.call("./runAPI.bat")
+    # subprocess.call("./runAPI.bat")
 
 if __name__ == '__main__':
     main()
