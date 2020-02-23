@@ -9,7 +9,8 @@ import requests
 from django.views import View
 
 def getJsonFromMusicAPI(apiName):
-    URL = 'http://localhost:4000/'
+    # URL = 'http://localhost:4000/'
+    URL = "https://netease-ljc.herokuapp.com/"
     URL += apiName
     r = requests.get(URL)
     jsonData = r.json()
