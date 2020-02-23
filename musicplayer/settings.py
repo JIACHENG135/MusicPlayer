@@ -56,7 +56,7 @@ ROOT_URLCONF = 'musicplayer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['appfront/dist'],
+        'DIRS': ['appfront/dist',BASE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
