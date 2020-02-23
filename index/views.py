@@ -12,7 +12,7 @@ def getJsonFromMusicAPI(apiName):
     # URL = 'http://localhost:4000/'
     URL = "https://netease-ljc.herokuapp.com/"
     URL += apiName
-    r = requests.get(URL,verify=False)
+    r = requests.get(URL)
     jsonData = r.json()
     return jsonData 
 

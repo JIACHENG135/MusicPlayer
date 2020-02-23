@@ -109,8 +109,8 @@
           .then((response) => {
             var songs= response.data
             this.list3 = []
-            for(var i=0;i<songs.length;i++){
-              if(songs[i].src!=0){
+            for(var i=0;i<Math.max(5,songs.length);i++){
+              // if(songs[i].src!=0){
                 this.list3.push({
                   src:songs[i].src,
                   lrc:songs[i].lrc,
@@ -118,7 +118,7 @@
                   artist:songs[i].artist,
                   pic:songs[i].pic,
                 })
-              }
+              // }
 
             }
             })
