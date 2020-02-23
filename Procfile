@@ -1,1 +1,1 @@
-web: gunicorn musicplayer.wsgi --timeout 50 --log-file - 
+web: gunicorn musicplayer.wsgi --timeout 120 --log-file - 

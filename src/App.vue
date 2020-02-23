@@ -7,7 +7,7 @@
       <el-input
         placeholder="请输入内容"
         v-model="input4">
-        <i @click="searchSong()" slot="prefix" class="el-input__icon el-icon-search"></i>
+        <i @click="searchSong();jumpOver()" ref="bubble" slot="prefix" class="el-input__icon el-icon-search bubble-wrapper"></i>
       </el-input>
 
       <aplayer
@@ -34,22 +34,31 @@
       </el-card>
     </el-carousel-item>
   </el-carousel>
-
+  <!-- <animator></animator> -->
+  <!-- <iconrotor ref="foo"></iconrotor> -->
     </div>
   </div>
 </template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
-
+<script>
+  function SearchRotate(){
+   this.refs.foo.jumoOver();
+  }
+</script>>
 <script>
   import Aplayer from 'vue-aplayer'
+  import MusicList from "./components/MusicList"
+  import Animator from "./components/Animator"
+  import IconRotor from "./components/IconRotor"
   import axios from 'axios';
   import Vue from "vue";
+  import { TimelineLite, Back, Elastic, Expo } from "gsap"
 
   Vue.prototype.$http = axios
   export default {
     name: 'App',
     components: {
-      Aplayer,
+      Aplayer,"animator":Animator,'iconrotor':IconRotor,
     },
     data () {
       return {
@@ -75,7 +84,7 @@
     methods:{
       // Add top soongs
       addhotSongs(){
-        this.$http.get(process.env.API_URL +'/index')
+        this.$http.get('http://127.0.0.1:8000/index')
           .then((response) => {
             // console.log(response.error_num)
             // var res = JSON.parse(response.data)
@@ -95,7 +104,7 @@
       // Create high qualified album
       addHQAlbum(){
         console.log("Try to add album")
-        this.$http.get(process.env.API_URL +'/index/addAlbum')
+        this.$http.get('http://127.0.0.1:8000/index/addAlbum')
         .then((response) => {
           var res = response.data.albums
           console.log(res)
@@ -104,13 +113,15 @@
           }
         })
       },
+
       searchSong(){
-        this.$http.get(process.env.API_URL +'/index/searchSong/' + this.input4)
+        // this.$refs.foo.jumpOver()
+        this.$http.get('http://127.0.0.1:8000/index/searchSong/' + this.input4)
           .then((response) => {
             var songs= response.data
             this.list3 = []
-            for(var i=0;i<Math.max(5,songs.length);i++){
-              // if(songs[i].src!=0){
+            for(var i=0;i<songs.length;i++){
+              if(songs[i].src!=0){
                 this.list3.push({
                   src:songs[i].src,
                   lrc:songs[i].lrc,
@@ -118,14 +129,14 @@
                   artist:songs[i].artist,
                   pic:songs[i].pic,
                 })
-              // }
+              }
 
             }
             })
       },
 
       updateListByAlbum(albumID){
-        this.$http.get(process.env.API_URL +'/index/updateList/' + albumID)
+        this.$http.get('http://127.0.0.1:8000/index/updateList/' + albumID)
           .then((response) => {
             var songs= response.data
 
@@ -145,13 +156,37 @@
               i += 1;
             }
             })
-      }
+      },
+
+
+
+
+          jumpOver(){
+            const { bubble, bubblePulse } = this.$refs
+            const timeline = new TimelineLite()
+            timeline.to(bubble, 0.4, {
+            scale: 0.5,
+            rotation: 16,
+            ease: Back.easeOut.config(1.7),
+            })   
+
+            
+            timeline.to(bubble, 1.0, {
+            scale: 1,
+            rotation: '-=16',
+            ease: Elastic.easeOut.config(2.5, 0.5),
+            })
+
+            }
+
 
 
       },
 
   
   }
+
+
 </script>
 <style>
   html, body {
@@ -216,4 +251,35 @@
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
   }
+
+
+  .bubble {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  background: #272727;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+.bubble-pulse {
+  position: absolute;
+  z-index: 1;
+  height: 120px;
+  width: 120px;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+  background: #272727;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+.bubble-image {
+  height: 50%;
+}
 </style>
