@@ -25,27 +25,23 @@ def indexView(request,keyword="周杰伦"):
     songs = []
     ct = 5
     cur = 0
-    for song in data['songs']:
+    for song in data['songs'][:5]:
         src = getSongUrl(song['id'])
-        if cur<ct and src:
-            newsong = {}
-            newsong['src'] = src
-            print(song['id'])
-            
-            albumId = song['album']['id']
-            albumImgUrl = getJsonFromMusicAPI("album?id="+str(albumId))['album']['picUrl']
-            newsong['artist'] = song['artists'][0]['name']
-            newsong['id'] = song['id']
-            
-            try:
-                newsong['lrc'] = getJsonFromMusicAPI("lyric?id="+str(song['id']))['lrc']['lyric']
-            except:
-                print("lyric is missing")
-                newsong['lrc'] = ''
-            newsong['pic'] = albumImgUrl
-            newsong['title'] = song['name']
-            songs.append(newsong)
-            cur += 1
+        newsong = {}
+        newsong['src'] = src
+        albumId = song['album']['id']
+        albumImgUrl = getJsonFromMusicAPI("album?id="+str(albumId))['album']['picUrl']
+        newsong['artist'] = song['artists'][0]['name']
+        newsong['id'] = song['id']
+        try:
+            newsong['lrc'] = getJsonFromMusicAPI("lyric?id="+str(song['id']))['lrc']['lyric']
+        except:
+            print("lyric is missing")
+            newsong['lrc'] = ''
+        newsong['pic'] = albumImgUrl
+        newsong['title'] = song['name']
+        songs.append(newsong)
+        cur += 1
     # print(hotsong_json.keys())
     # for song in hotsong_json:
     #     songUrl = getJsonFromMusicAPI("http://localhost:4000/song/url?id="+str(song["id"]))['data'][0]['url']
