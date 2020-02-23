@@ -75,7 +75,7 @@
     methods:{
       // Add top soongs
       addhotSongs(){
-        this.$http.get(process.env.API_URL +'/index')
+        this.$http.get('http://127.0.0.1:8000/index')
           .then((response) => {
             // console.log(response.error_num)
             // var res = JSON.parse(response.data)
@@ -95,7 +95,7 @@
       // Create high qualified album
       addHQAlbum(){
         console.log("Try to add album")
-        this.$http.get(process.env.API_URL +'/index/addAlbum')
+        this.$http.get('http://127.0.0.1:8000/index/addAlbum')
         .then((response) => {
           var res = response.data.albums
           console.log(res)
@@ -105,7 +105,7 @@
         })
       },
       searchSong(){
-        this.$http.get(process.env.API_URL +'/index/searchSong/' + this.input4)
+        this.$http.get('http://127.0.0.1:8000/index/searchSong/' + this.input4)
           .then((response) => {
             var songs= response.data
             this.list3 = []
@@ -125,7 +125,7 @@
       },
 
       updateListByAlbum(albumID){
-        this.$http.get(process.env.API_URL +'/index/updateList/' + albumID)
+        this.$http.get('http://127.0.0.1:8000/index/updateList/' + albumID)
           .then((response) => {
             var songs= response.data
 
