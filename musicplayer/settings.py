@@ -56,7 +56,7 @@ ROOT_URLCONF = 'musicplayer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'appfront/dist')],
+        'DIRS': [os.path.join(BASE_DIR,'dist')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,7 +129,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 DEBUG = False
-SECRET_KEY = os.environ['SECRET_KEY']
+# SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['vue-aplayer-django.herokuapp.com', 'localhost']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -137,7 +137,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,"appfront/dist/static"),
+    os.path.join(BASE_DIR,"dist/static"),
 ]
 DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
