@@ -64,7 +64,7 @@ def carouselAPI(request):
 @require_http_methods(['GET'])
 def searchSong(requests,keyword="周杰伦"):
     print("searchSong is called")
-    return JsonResponse(getJsonFraZSqomMusicAPI("search?keywords="+keyword))
+    return JsonResponse(getJsonFromMusicAPI("search?keywords="+keyword))
 
 @require_http_methods(['GET'])
 def getAlbumInfo(requests,albumID):
